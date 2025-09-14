@@ -1,31 +1,34 @@
-public class Libro {
+public abstract class Libro {
     private String titulo;
     private String autor;
-    private String ISBN;
-    private boolean disponible;
+    private String isbn;
+    private boolean disponible = true;
 
-    public Libro(String titulo, String autor, String ISBN) {
+    public Libro(String titulo, String autor, String isbn) {
         this.titulo = titulo;
         this.autor = autor;
-        this.ISBN = ISBN;
-        this.disponible = true;
+        this.isbn = isbn;
     }
 
-    public String getTitulo() { return titulo; }
-    public String getAutor() { return autor; }
-    public String getISBN() { return ISBN; }
-    public boolean isDisponible() { return disponible; }
+    public String getTitulo() {
+        return titulo;
+    }
 
-    protected void setDisponible(boolean disponible) {
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
 
-    public void prestar() {
-        if (disponible) {
-            disponible = false;
-            System.out.println(titulo + "' ha sido prestado.");
-        } else {
-            System.out.println("El libro '" + titulo + "' no está disponible.");
-        }
-    }
+    public abstract void prestar(Usuario usuario);
 }

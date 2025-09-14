@@ -2,24 +2,28 @@ import java.util.ArrayList;
 
 public class Usuario {
     private String nombre;
-    private ArrayList<Libro> librosPrestados;
+    private ArrayList<Libro> librosPrestados = new ArrayList<>();
 
     public Usuario(String nombre) {
         this.nombre = nombre;
-        this.librosPrestados = new ArrayList<>();
     }
 
-    public String getNombre() { return nombre; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public void prestarLibro(Libro libro) {
-        libro.prestar();
+    public void agregarLibro(Libro libro) {
         librosPrestados.add(libro);
     }
 
     public void mostrarLibrosPrestados() {
-        System.out.println("Libros prestados por " + nombre + ":");
-        for (Libro libro : librosPrestados) {
-            System.out.println("   - " + libro.getTitulo());
+        if (librosPrestados.isEmpty()) {
+            System.out.println(nombre + " no tiene libros prestados.");
+        } else {
+            System.out.println("Libros prestados a " + nombre + ":");
+            for (Libro libro : librosPrestados) {
+                System.out.println(" - " + libro.getTitulo());
+            }
         }
     }
 }

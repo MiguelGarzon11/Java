@@ -1,19 +1,19 @@
 public class LibroFisico extends Libro {
     private String ubicacion;
 
-    public LibroFisico(String titulo, String autor, String ISBN, String ubicacion) {
-        super(titulo, autor, ISBN);
+    public LibroFisico(String titulo, String autor, String isbn, String ubicacion) {
+        super(titulo, autor, isbn);
         this.ubicacion = ubicacion;
     }
 
     @Override
-    public void prestar() {
+    public void prestar(Usuario usuario) {
         if (isDisponible()) {
             setDisponible(false);
-            System.out.println("Libro físico '" + getTitulo() + "' prestado.");
-            System.out.println("Ubicación: " + ubicacion);
+            usuario.agregarLibro(this);
+            System.out.println("Libro físico prestado a " + usuario.getNombre());
         } else {
-            System.out.println("Libro físico no disponible.");
+            System.out.println("Este libro físico no está disponible.");
         }
     }
 }
