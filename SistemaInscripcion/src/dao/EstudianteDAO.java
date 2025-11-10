@@ -2,10 +2,15 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Estudiante;
 import db.Conexion;
+import java.sql.*;
 
 
 public class EstudianteDAO {
@@ -31,9 +36,36 @@ public class EstudianteDAO {
             System.err.println(" Documento duplicado: " + estudiante.getDocumento());
             return false;
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
 
     }
+
+    public List<Estudiante> obtenerTodos() {
+        List<Estudiante> lista = new ArrayList<>();
+        String sql = "SELECT * FROM estudiantes";
+
+        try (Connection conn = Conexion.conectar();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Estudiante e = new Estudiante(
+                    rs.getString("nombre_completo"),
+                    rs.getString("documento"),
+                    rs.getString("programa"),
+                    rs.getString("celular"),
+                    rs.getString("correo"),
+                    rs.getString("semestre"),
+                    rs.getString("universidad")
+                );
+                lista.add(e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener estudiantes: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
 }
